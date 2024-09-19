@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 
     // searching - strchr() strrchr() strstr() strcspn() strpbrk()
     char* s7 = (char*)malloc(sizeof(char) * 64); strcpy(s7, "hello world");
-    char* ptr = strchr(s7, 'o'); // returns the pointer to the char
+    char* ptr = strchr(s7, 'o'); // returns a pointer to the first occurrence of a char
     cout << "Found first \'o\' at place " << ptr - s7 << endl; // 4
     ptr = strrchr(s7, 'o');
     cout << "Found last \'o\' at place " << ptr - s7 << endl; // 7
@@ -47,17 +47,19 @@ int main(int argc, char *argv[]) {
     cout << endl; // e o o
     free(s7); free(ptr);
 
-    // others - strtok() strlen()
-    char* s8 = (char*)malloc(sizeof(char) * 64); strcpy(s8, "  - This, is a sample  , string. ");
+    // strtok() - split string into tokens
+    char* s8 = (char*)malloc(sizeof(char) * 64); strcpy(s8, "- This, is a sample  , string. ");
     const char* delimiters = " -,";
-    cout << "Splitting string into tokens: " << endl;
-    ptr = strtok(s8, delimiters);
-    while(ptr != NULL) {
-        cout << ptr << " ";
-        ptr = strtok(NULL, delimiters);
+    cout << "Splitting string into tokens: ";
+    char* token = strtok(s8, delimiters); // the end of the token is replaced by '\0' and the beginning of the token is returned
+    while(token != NULL) {
+        cout << token << " ";
+        token = strtok(NULL, delimiters);
     }
     cout << endl; // This is a smaple string.
-    cout << s8 << endl; //  __- This (note that the end of the first token is automatically replaced by a null-character)
+    cout << s8 << endl; //  "- This"
+    
+    // strlen() - get string length
     char* s9 = (char*)malloc(sizeof(char) * 64); strcpy(s9, "t h a n k s");
     cout << strlen(s9) << endl; // 11
     free(s8); free(s9); free(ptr);
